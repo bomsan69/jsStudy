@@ -1,30 +1,34 @@
-//"use strict";
-//define a function
-
-var myFunction = function(){
-    console.log(this);
-}
-
-//call the function
-//myFunction();
-
-var myObject = {
-    myMethod:function(){
-        console.log(this);
-    }
-}
-
-
-//myObject.myMethod();
 
 
 var myMethod = function(){
-    console.log(this);
+    console.log(this.a);
+}
+   
+
+var obj1 = {
+    a: 'obj1',
+    myMethod: myMethod,   
 }
 
-var myObject = {
-    myMethod: myMethod
+var obj2 = {
+    a: 'obj2',
+    myMethod: myMethod,
 }
 
-myObject.myMethod();  //this === myObject
-myMethod();   //this === window
+
+//Explict   bindnig
+myMethod.apply(obj1, [1,2]);
+myMethod.call(obj2,1,2);
+
+//Implicit binding
+obj1.myMethod(1,2);
+obj2.myMethod(1,2);
+
+console.log("obj1.myMethod ?");
+obj1.myMethod.apply(obj2, [1,2]);
+
+
+//hard bindig
+myMethod = myMethod.bind(obj1); 
+myMethod(1,2);
+myMethod(obj2,1,2);
